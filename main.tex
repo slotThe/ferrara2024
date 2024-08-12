@@ -1,0 +1,219 @@
+\documentclass[portrait, noFonts]{betterposter/betterposter}
+\usepackage[type=poster, math=fancy, font=palatino, osf]{styles/style}
+
+% Even smaller actions.
+\makeatletter
+\renewcommand*{\@smallTriangle}[2]{\raisebox{\depth+0.070em}{\scalebox{0.65}{\ensuremath{#1#2}}}}
+\renewcommand*{\ract}{\mathbin{\mathpalette\@smallTriangle\lhd}}
+\makeatother
+
+% Tweak betterposter's default font sizes.
+\renewcommand{\fontsizestandard}{\fontsize{39.00}{55.50} \selectfont}  % Bit bigger
+\renewcommand{\fontsizeauthor}{\fontsize{43.00}{63.00} \selectfont}    % Bit smaller
+\renewcommand{\fontsizetitle}{\fontsize{51.00}{100.00} \selectfont}    % Bit smaller
+\renewcommand{\fontsizemain}{\fontsize{135.00}{200.00} \selectfont}    % Much bigger
+\newcommand{\fontsizeinstitution}{\fontsize{30.00}{50.00} \selectfont} % Bit smaller
+
+% A colourful box to (hopefully) grab the reader's attention.
+\usepackage[most]{tcolorbox}
+\colorlet{highlightColour}{red!55!black}
+\NewTColorBox{highlight}{O{}}{%
+  empty,
+  title={#1},
+  attach boxed title to top left,
+  boxed title style={empty,size=minimal,toprule=0pt,top=4pt,left=3.5mm,bottom=5pt,overlay={}},
+  coltitle=highlightColour,
+  fonttitle=\bfseries,
+  before=\par\medskip\noindent,
+  bottom=0pt,
+  overlay unbroken={%
+    \draw[highlightColour,line width=3pt]
+      % Attach to title if any, otherwise attach to frame.
+      ([xshift=-0pt] \IfBlankTF{#1}{frame}{title}.north west)
+      --
+      ([xshift=-0pt] frame.south west);%
+  },
+}
+
+% This is a little bit more visible on a poster.
+\renewcommand{\k}{\mathbb{k}}
+
+% These haven't made it into the style file yet.
+\NewDocumentCommand{\tetramod}{O{} O{} O{} O{}}{%
+  \leftidx{^{#1}_{#2}}{(\kVect)}{_{#3}^{#4}}%
+}
+\NewDocumentCommand{\tetramodfd}{O{} O{} O{} O{}}{%
+  \leftidx{^{#1}_{#2}}{(\kvect)}{_{#3}^{#4}}%
+}
+\newcommand*{\trimod}[1][B]{\tetramodfd[#1][#1][][#1]}
+\newcommand*{\bcomod}[1][B]{\tetramodfd[#1]}
+\renewcommand*{\hom}[1]{\ensuremath{\lfloor#1\rfloor}}
+\newcommand*{\cohom}[1]{\ensuremath{\lceil#1\rceil}}
+
+\begin{document}
+
+%%% TOP
+\betterThreeColumns{                                           % LEFT
+  \title{Lax Module Functors, Reconstruction, and Hopf Algebras}
+  \vspace{-1.0em}
+  \author{Tony Zorman {\hfill\large Based on joint work with}}
+  \vspace{0.3em}
+  \institution{\fontsizeinstitution{}TU Dresden {\hfill\large Mateusz Stroiński}}
+
+  \bigskip\bigskip
+  Our investigation starts with Kelly's classic notion of \emph{doctrinal adjunctions}:\\[-0.6em]
+  \begin{highlight}
+    For monoidal categories \(\cat{C}\) and \(\cat{D}\), and an adjunction \(\stdadj\),
+    there is a bijection between oplax monoidal structures on \(F\) and lax monoidal structures on \(U\).
+  \end{highlight}
+
+  This result provides a kind of \emph{Tannaka reconstruction} for bimonads,
+  as given by Moerdijk.\\[-0.6em]
+  \begin{highlight}
+    There is a bijective correspondence between opmonoidal structures of a monad \(T\) on a monoidal category \(\cat{C}\),
+    and mon\-oidal structures on \(\cat{C}^T\) such that the forgetful functor is strong monoidal.
+  \end{highlight}
+}{                                                             % MIDDLE
+  \bigskip
+  This correspondence lifts to the setting of \emph{oplax \(\cat{C}\)-module monads}: monads \(T\) on \(\cat{M}\), for a (left) \(\cat{C}\)-module category \(\cat{M}\),
+  that are equipped with a natural \emph{action} morphism, resembling that of an opmonoidal comultiplication:
+  \[
+    T_{\mathsf{a}} \from T(\blank \lact \bblank) \,\nt\, \blank \lact T(\bblank).
+  \]
+
+  \vspace{0.5em}\begin{highlight}[Theorem (Halbig--Z)]
+    There is a bijective correspondence between
+    oplax \(\cat{C}\)-module structures of a monad \(T\) on \(\cat{M}\),
+    and \(\cat{C}\)-module structures on \(\cat{M}^T\) such that the forgetful functor \(U^T\) is a strict \(\cat{C}\)-module functor.
+  \end{highlight}
+
+  In contrast to these results stands \emph{Deligne reconstruction},
+  where one does not require a forgetful functor—%
+  at the cost of only recovering the algebraic object of interest up to \emph{Morita equivalence}.
+}{                                                             % RIGHT
+  \bigskip
+  Furthermore, the monads we consider are naturally \emph{lax} module functors.
+  In that case, one obtains a \(\cat{C}\)-module structure on the \emph{Kleisli category} \(\cat{M}_T\) of \(T\).
+  Under mild additional assumptions,
+  this induces a unique \(\cat{C}\)-module structure on \(\cat{M}^T\).\\[-0.6em]
+  \begin{highlight}[Proposition (Stroiński--Z)]
+    If \(\cat{M}_T\) has a left module structure,
+    and the canonical inclusion \(\iota\from \cat{M}_T \to \cat{M}^T\) is strong,
+    then this induces an essentially unique left \(\cat{C}\)-module structure on
+    the category of \(T\)-modules.
+  \end{highlight}
+  Let us now concentrate on the representation theoretic case.
+  For a field \(\k\), suppose that \(\cat{C}\) is a \(\k\)-linear abelian monoidal category,
+  and that \(\cat{M}\) is a \(\k\)-linear abelian left \(\cat{C}\)-module category.
+}
+
+%%% MIDDLE
+\maincolumn{
+  \bigskip\bigskip\bigskip\bigskip
+  \begin{minipage}{\textwidth}
+    \hspace*{0.1em}\begin{minipage}{0.75\textwidth}
+      \centering
+      Deligne reconstruction works\\[-0.6em]
+      for nice module categories\\[-0.6em]
+      over nice abelian bases\\[-0.6em]
+    \end{minipage}\begin{minipage}{\textwidth}
+      {\hspace{0.2em}{\LARGE Paper, Poster, References}\\[0.1em]
+        \mbox{\hspace{0.45em}\qrcode[nolinks, height=13cm]{https://tony-zorman.com/ferrara2024}}}
+    \end{minipage}
+  \end{minipage}
+  \bigskip\bigskip\bigskip\bigskip
+}
+
+%%% BOTTOM
+\betterThreeColumns{                                           % LEFT
+  An important ingredient in our study of the module structure of \(\cat{M}^T\)
+  are \emph{internal} projective objects: objects
+  \(X \in \cat{M}\) such that acting with any projective in \(\cat{C}\) is a projective in \(\cat{M}\).
+  If \(X\) is \emph{closed}—the adjunction
+  \[
+    \adj{\blank \lact X}{\hom{X, \blank}}{\cat{C}}{\cat{M}}
+  \]
+  exists---this guarantees the right adjoint to be an exact functor.
+
+  If \(X\) satisfies the additional condition of being a \emph{\(\cat{C}\)-generator},
+  then \(\hom{X, \blank}\) even reflects zero objects;
+  in particular, all of the preconditions of \emph{Beck's monadicity theorem}
+  for abelian categories hold:
+
+  \vspace{0.5em}\begin{highlight}
+    An adjunction between abelian categories is monadic
+    if and only if
+    the right adjoint is right exact and reflects zero objects.
+  \end{highlight}
+
+  Naturally, one could instead talk about internal \emph{injective} objects
+  and \(\cat{C}\)-cogenerators.
+  This involves studying the adjunction
+  \[
+    \adj{\cohom{X, \blank}}{\blank \lact X}{\cat{M}}{\cat{C}}.
+  \]
+
+  \vspace{0.5cm} Putting all of these pieces together,
+  we obtain a Deligne-type reconstruction result.
+}{                                                             % MIDDLE
+  \begin{highlight}[Theorem (Stroiński--Z)]
+    If \(\cat{C}\) has enough projectives,
+    then all \(\cat{C}\)-module categories with enough projectives that
+    have a closed \(\cat{C}\)-projective \(\cat{C}\)-generator
+    are of the form \(\cat{C}^{\hom{X,\, \blank \,\lact\, X}}\).
+  \end{highlight}
+
+  This theorem in particular does not need a rigidity assumption.
+  If this is added, the statement reduces from the monadic to the algebraic case.
+
+  \vspace{0.5em}\begin{highlight}
+    If \(\cat{C}\) has enough projectives and is rigid,
+    then for all \(\cat{C}\)-module categories \(\cat{M}\) with enough projectives that
+    have a closed \(\cat{C}\)-projective \(\cat{C}\)-generator,
+    there exists an algebra object \(A \in \cat{C}\)
+    with \(\mathrm{mod}_{\cat{C}}(A) \simeq \cat{M}\).
+  \end{highlight}
+
+  A category having enough injectives may instead be replaced by considering its \emph{ind-completion}.
+  Hopf algebraically,
+  this yields a variant of a result by Ostrik.
+
+  \vspace{0.5em}\begin{highlight}[Corollary (Stroiński--Z)]
+    Every finite abelian \(\tetramodfd[H]{}\)-module category \(\cat{M}\),
+    with \(\blank \lact M\) exact for all \(M \in \cat{M}\),
+    is equivalent to \(\mathsf{comod}_{\tetramodfd[H]{}}(C)\), for an \(H\)-comodule algebra \(C\).
+  \end{highlight}
+}{                                                             % RIGHT
+  We also obtain a version of the fundamental theorem of Hopf modules
+  for the case of \emph{Hopf trimodules}.
+  The statement is akin to the quasi-bialgebraic case, as proven by Hausser--Nill and Saracco.
+
+  \vspace{0.8em}\begin{highlight}[Proposition (Stroiński--Z)]
+    A bialgebra \(B\) admits a twisted antipode
+    if and only if
+    the natural arrow
+    \[
+      B \otimes \blank \from \tetramod[B] \to \tetramod[B][B][][B]
+    \]
+    is an equivalence.
+  \end{highlight}
+
+  Lastly, the \emph{fusion operators} of a bimonad
+  in the sense of Bruguières--Lack--Virelizier
+  also fit into this framework%
+  ---they can be seen as coherence morphisms for a natural module action.
+
+  \vspace{0.8em}\begin{highlight}[Proposition (Stroiński--Z)]
+    Let \(\adj{F}{U}{\cat{C}}{\cat{D}}\) be an opmonoidal adjunction.
+    The bimonad \(T \eqdef UF\) on \(\cat{C}\) is Hopf
+    if and only if
+    the coherence cells for the natural oplax \(\cat{C}^T\)-module monad structure on \(T\) are isomorphisms.
+  \end{highlight}
+}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:

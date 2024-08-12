@@ -1,0 +1,10 @@
+.envrc
+.direnv
+result
+auto/
+*-blx.bib
+*.aux
+*.log
+*.pdf
+*.run.xml
+*.synctex.gz
